@@ -3,8 +3,11 @@ require './lib/cell'
 require './lib/ship'
 
 RSpec.describe Board do
-  it 'instatiation' do
+  before :each do
     @board = Board.new
+  end
+
+  it 'instantiation' do
     @board_cells = {
       'A1' => Cell.new('A1'),
       'A2' => Cell.new('A2'),
@@ -31,5 +34,13 @@ RSpec.describe Board do
     expect(@board.cells['A1']).to be_a(Cell)
     expect(@board.cells['C3']).to be_a(Cell)
     expect(@board.cells['D4']).to be_a(Cell)
+  end
+
+  it 'can #valid_coordinate' do
+    expect(@board.valid_coordinate?('A1')).to be true
+    expect(@board.valid_coordinate?('D4')).to be true
+    expect(@board.valid_coordinate?('A5')).to be false
+    expect(@board.valid_coordinate?('E1')).to be false
+    expect(@board.valid_coordinate?('A22')).to be false
   end
 end
