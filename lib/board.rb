@@ -25,4 +25,18 @@ class Board
   def valid_coordinate?(coordinate)
     @cells.keys.include?(coordinate)
   end
+
+  def valid_placement?(ship, coord_array)
+    return false if ship.length != coord_array.length
+
+    valid = true
+    index = 0
+
+    while valid == true && index < coord_array.length - 1
+      valid = (coord_array[index + 1].ord + coord_array[index + 1][1].ord) -
+        (coord_array[index].ord + coord_array[index][1].ord) == 1
+        index += 1
+    end
+    valid
+  end
 end
