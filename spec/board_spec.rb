@@ -5,6 +5,8 @@ require './lib/ship'
 RSpec.describe Board do
   before :each do
     @board = Board.new
+    @cruiser = Ship.new('Cruiser', 3)
+    @submarine = Ship.new('Submarine', 2)
   end
 
   it 'instantiation' do
@@ -27,12 +29,6 @@ RSpec.describe Board do
 
   describe '#valid_placement?' do
     context 'Ship placement is valid' do
-
-      before  :each do
-        @cruiser = Ship.new('Cruiser', 3)
-        @submarine = Ship.new('Submarine', 2)
-      end
-
       it 'check proper ship length' do
         expect(@board.valid_placement?(@cruiser, ['A1', 'A2'])).to be false
         expect(@board.valid_placement?(@submarine, ['A2', 'A3', 'A4'])).to be false
@@ -53,6 +49,27 @@ RSpec.describe Board do
       it 'can #valid_placement?' do
         expect(@board.valid_placement?(@submarine, ['A1', 'A2'])).to be true
         expect(@board.valid_placement?(@cruiser, ['B1', 'C1', 'D1'])).to be true
+      end
+    end
+  end
+
+  describe 'Ship placement' do
+    context 'place ship' do
+      before :each do
+        @board.place(@cruiser, ["A1", "A2", "A3"])
+        @cell_1 = @board.cells["A1"]
+        @cell_2 = @board.cells["A2"]
+        @cell_3 = @board.cells["A3"]
+      end
+
+      it 'the Cell obj has Ship Obj' do
+        expect(@cell_1.ship).to eq(@cruiser)
+        expect(@cell_2.ship).to eq(@cruiser)
+        expect(@cell_3.ship).to eq(@cruiser)
+      end
+
+      it 'can place the cruiser' do
+        expect(@cell_3.ship == @cell_2.ship).to be true
       end
     end
   end
