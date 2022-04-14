@@ -39,4 +39,10 @@ class Board
     end
     valid
   end
+
+  def place(ship, coord_array)
+    coord_array.each do |coord|
+      @cells[coord].place_ship(ship)
+    end
+  end
 end
