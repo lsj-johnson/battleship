@@ -58,14 +58,14 @@ RSpec.describe Board do
   end
 
   describe '#place' do
-    context 'Can place ships on board' do
+    context 'Can #place ships on board' do
 
       before  :each do
-        @cruiser = Ship.new("Cruiser", 3)
+        @cruiser = Ship.new('Cruiser', 3)
+        @board.place(@cruiser, ['A1', 'A2', 'A3'])
       end
 
       it '#place' do
-        @board.place(@cruiser, ['A1', 'A2', 'A3'])
         @cell_1 = @board.cells['A1']
         @cell_2 = @board.cells['A2']
         @cell_3 = @board.cells['A3']
@@ -74,6 +74,12 @@ RSpec.describe Board do
         expect(@cell_2.ship).to eq(@cruiser)
         expect(@cell_3.ship).to eq(@cruiser)
         expect(@cell_3.ship == @cell_2.ship).to be true
+      end
+
+      it '#valid_placement? checks for ship overlap' do
+        @submarine = Ship.new('Submarine', 2)
+
+        expect(@board.valid_placement?(@submarine, ['A1', 'B1'])).to be false
       end
     end
   end

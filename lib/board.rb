@@ -29,6 +29,8 @@ class Board
   def valid_placement?(ship, coord_array)
     return false if ship.length != coord_array.length
 
+    return false if coord_array.any? { |coord| @cells[coord].ship != nil }
+
     valid = true
     index = 0
 
