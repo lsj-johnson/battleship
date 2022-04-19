@@ -46,4 +46,22 @@ class Board
       @cells[coord].place_ship(ship)
     end
   end
+
+  def render(bool = false)
+    board = "  1 2 3 4 \n"
+    cell_char = ('A'..'D').to_a
+    count = 0
+
+    cell_char.each do |char|
+      board += char + ' '
+      4.times do
+        count += 1
+        key = char + count.to_s
+        board += @cells[key].render(bool) + ' '
+      end
+      count = 0
+      board += "\n"
+    end
+    board
+  end
 end
