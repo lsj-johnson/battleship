@@ -18,7 +18,7 @@ class Board
       'D1' => Cell.new('D1'),
       'D2' => Cell.new('D2'),
       'D3' => Cell.new('D3'),
-      'D4' => Cell.new('D4'),
+      'D4' => Cell.new('D4')
     }
   end
 
@@ -28,13 +28,7 @@ class Board
 
   def valid_placement?(ship, coord_array)
     return false if ship.length != coord_array.length
-    return false if coord_array.any? { |coord| @cells[coord].ship != nil }
-
-    valid_cords = coord_array.all? do |coord|
-      valid_coordinate?(coord)
-    end
-    return false unless valid_cords
-
+    return false if coord_array.any? { |coord| !valid_coordinate?(coord) }
 
     valid = true
     index = 0
