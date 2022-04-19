@@ -23,21 +23,26 @@ class Board
   end
 
   def valid_coordinate?(coordinate)
-    @cells.keys.include?(coordinate)
+    @cells.keys.include?(coordinate) && @cells[coordinate].ship.nil?
   end
 
   def valid_placement?(ship, coord_array)
     return false if ship.length != coord_array.length
-
     return false if coord_array.any? { |coord| @cells[coord].ship != nil }
+
+    valid_cords = coord_array.all? do |coord|
+      valid_coordinate?(coord)
+    end
+    return false unless valid_cords
+
 
     valid = true
     index = 0
 
     while valid == true && index < coord_array.length - 1
       valid = (coord_array[index + 1].ord + coord_array[index + 1][1].ord) -
-        (coord_array[index].ord + coord_array[index][1].ord) == 1
-        index += 1
+              (coord_array[index].ord + coord_array[index][1].ord) == 1
+      index += 1
     end
     valid
   end

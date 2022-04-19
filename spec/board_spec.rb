@@ -5,6 +5,8 @@ require './lib/ship'
 RSpec.describe Board do
   before :each do
     @board = Board.new
+    @cruiser = Ship.new('Cruiser', 3)
+    @submarine = Ship.new('Submarine', 2)
   end
 
   it 'instantiation' do
@@ -27,12 +29,6 @@ RSpec.describe Board do
 
   describe '#valid_placement?' do
     context 'Ship placement is valid' do
-
-      before  :each do
-        @cruiser = Ship.new('Cruiser', 3)
-        @submarine = Ship.new('Submarine', 2)
-      end
-
       it 'check proper ship length' do
         expect(@board.valid_placement?(@cruiser, ['A1', 'A2'])).to be false
         expect(@board.valid_placement?(@submarine, ['A2', 'A3', 'A4'])).to be false
