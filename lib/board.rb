@@ -28,11 +28,13 @@ class Board
 
   def valid_placement?(ship, coord_array)
     return false if ship.length != coord_array.length
+    return false if coord_array.any? { |coord| @cells[coord].ship != nil }
 
     valid_cords = coord_array.all? do |coord|
       valid_coordinate?(coord)
     end
     return false unless valid_cords
+
 
     valid = true
     index = 0
@@ -45,8 +47,8 @@ class Board
     valid
   end
 
-  def place(ship, coords)
-    coords.each do |coord|
+  def place(ship, coord_array)
+    coord_array.each do |coord|
       @cells[coord].place_ship(ship)
     end
   end
